@@ -34,7 +34,7 @@ public class NacosDiscovery {
             instance.setIp(serverIp);//IP
             instance.setPort(serverPort);//端口
             instance.setServiceName(serviceName);//服务名
-            instance.setEnabled(true);//? true: 上线 false: 下线
+            instance.setEnabled(true);//true: 上线 false: 下线
             //instance.setInstanceId();
             instance.setHealthy(healthy);//健康状态
             instance.setWeight(1.0);//权重
@@ -44,12 +44,12 @@ public class NacosDiscovery {
             instance.addMetadata("nacos-sdk-java-discovery", "true");//元数据
 
             NamingService namingService = NacosFactory.createNamingService(serverAddr);
-            // 怎么删除服务信息？
+            // 思考一下：怎么删除服务信息？
 
             //NamingService namingService = NamingFactory.createNamingService(properties);
-            //
+  
             //NamingService namingService = NacosFactory.createNamingService(serverAddr);
-            //
+        
             //NamingService namingService = NamingFactory.createNamingService(properties);
 
             EventListener discoveryListener = new EventListener() {
@@ -77,7 +77,7 @@ public class NacosDiscovery {
             System.out.println("添加监听成功");
 
             // 获取所有实例
-            // 为什么一个是getAllInstances，一个是selectInstances
+            // 为什么一个是getAllInstances，一个是selectInstances?
             List<Instance> instances = namingService.getAllInstances(serviceName);
             System.out.println("当前线程：" + Thread.currentThread().getName() + " ,注册实例后获取所有实例：" + instances);
 
@@ -90,7 +90,7 @@ public class NacosDiscovery {
             System.out.println("当前线程：" + Thread.currentThread().getName() + " ,注册实例后获取一个健康实例：" + healthyInstance);
 
             try {
-                Thread.sleep(1000 * 10);
+                Thread.sleep(1000 * 30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -19,7 +19,7 @@ public class NacosConfig {
             String serverAddr = "127.0.0.1:8848";
             String dataId = "nacos-sdk-java-config";
             String group = "DEFAULT_GROUP";
-            String content = "nacos-sdk-java-config:yes";
+            String content = "nacos-sdk-java-config:init";
             Properties properties = new Properties();
             properties.put("serverAddr", serverAddr);
 
@@ -29,11 +29,11 @@ public class NacosConfig {
             // 方式二：创建ConfigService
             //ConfigService configService = ConfigFactory.createConfigService(serverAddr);
 
-            /*// 方式三：创建ConfigService
-            ConfigService configService = NacosFactory.createConfigService(properties);
+            // 方式三：创建ConfigService
+            //ConfigService configService = NacosFactory.createConfigService(properties);
 
             // 方式四：创建ConfigService
-            ConfigService configService = ConfigFactory.createConfigService(properties);*/
+            //ConfigService configService = ConfigFactory.createConfigService(properties);
 
             // 获取服务状态
             System.out.println("当前线程：" + Thread.currentThread().getName() + " ,服务状态：" + configService.getServerStatus());
@@ -57,6 +57,7 @@ public class NacosConfig {
             System.out.println("发布配置");
             configService.publishConfig(dataId, group, content);
             System.out.println("发布配置成功");
+			
             try {
                 Thread.sleep(1000 * 3);
             } catch (InterruptedException e) {
@@ -83,7 +84,7 @@ public class NacosConfig {
             System.out.println("当前线程：" + Thread.currentThread().getName() + " ,重新发布配置后获取配置内容：" + configAfterUpdate);
 
             try {
-                Thread.sleep(1000 * 5);
+                Thread.sleep(1000 * 30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -97,6 +98,12 @@ public class NacosConfig {
                 System.out.println("移除配置失败");
             }
 
+			try {
+                Thread.sleep(1000 * 3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+			
             String configAfterRemove = configService.getConfig(dataId, group, 3000);
             System.out.println("当前线程：" + Thread.currentThread().getName() + " ,移除配置后获取配置内容：" + configAfterRemove);
 
